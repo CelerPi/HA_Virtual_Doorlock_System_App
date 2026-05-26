@@ -11,7 +11,7 @@
 
 ## 2. Add-on 配置
 
-在 Add-on Configuration 中填写：
+在应用配置页中填写：
 
 ```yaml
 local_ip: "192.168.16.64"

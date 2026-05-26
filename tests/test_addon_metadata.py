@@ -11,13 +11,22 @@ class AddonMetadataTest(unittest.TestCase):
         config_text = (ADDON_DIR / "config.yaml").read_text(encoding="utf-8")
 
         self.assertIn('name: "UpperCoast Doorlock System"', config_text)
-        self.assertIn('version: "0.1.2"', config_text)
+        self.assertIn('version: "0.1.3"', config_text)
+        self.assertIn('description: "云海湾门禁虚拟室内机后端。"', config_text)
 
     def test_addon_changelog_exists_for_home_assistant_store(self):
         changelog = ADDON_DIR / "CHANGELOG.md"
 
         self.assertTrue(changelog.exists())
-        self.assertIn("## 0.1.2 - 2026-05-27", changelog.read_text(encoding="utf-8"))
+        changelog_text = changelog.read_text(encoding="utf-8")
+        self.assertIn("## 0.1.3 - 2026-05-27", changelog_text)
+        self.assertIn("将应用信息页说明改为中文", changelog_text)
+
+    def test_addon_readme_is_chinese_first(self):
+        readme_text = (ADDON_DIR / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("这个应用运行云海湾门禁虚拟室内机后端", readme_text)
+        self.assertIn("主机网络模式", readme_text)
 
     def test_simplified_chinese_configuration_translation_exists(self):
         translation = ADDON_DIR / "translations" / "zh-Hans.yaml"

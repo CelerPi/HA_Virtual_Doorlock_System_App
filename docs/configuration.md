@@ -33,7 +33,7 @@ building_2_c -> 2栋C座
 
 ## 门口机 IP 覆盖
 
-Add-on Configuration 页面里有 `door_01_ip` 到 `door_08_ip`。这些字段默认留空，表示使用 `building_id` 对应的内置楼栋 IP 规则。
+应用配置页里有 `door_01_ip` 到 `door_08_ip`。这些字段默认留空，表示使用 `building_id` 对应的内置楼栋 IP 规则。
 
 如果现场抓包发现某个号机 IP 和预设不一致，只需要填写对应字段。例如只覆盖 2 号机：
 
@@ -70,4 +70,4 @@ Add-on 会写入：
 
 - `local_ip`、`local_id`、`building_id`、`center_ip`、`property_center_ip`、API 配置以 Add-on options 为准。
 - `devices` 从楼栋规则表和 `door_01_ip` 到 `door_08_ip` 覆盖项生成。
-- `/data/yunhai_config.json` 只作为运行时镜像保存，重启后会重新同步 Add-on Configuration。
+- `/data/yunhai_config.json` 只作为运行时镜像保存，重启后会重新同步应用配置页。
