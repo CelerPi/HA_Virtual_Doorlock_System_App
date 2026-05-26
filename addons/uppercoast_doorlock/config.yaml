@@ -1,5 +1,5 @@
 name: "虚拟门禁系统"
-version: "0.1.1"
+version: "0.1.0"
 slug: "uppercoast_doorlock"
 description: "仅支持麦驰可视对讲门禁系统；运行虚拟室内机、呼叫监听、接听和解锁服务。"
 url: "https://github.com/CelerPi/HA-UpperCoast-DoorLock-System"
@@ -29,9 +29,9 @@ options:
   door_07_ip: ""
   door_08_ip: ""
 schema:
-  local_ip: str
-  local_id: str
   building_id: list(1栋A座|1栋B座|1栋C座|1栋D座|1栋E座|2栋A座|2栋B座|2栋C座)
+  local_id: str
+  local_ip: str
   center_ip: str
   property_center_ip: str
   api_host: str
