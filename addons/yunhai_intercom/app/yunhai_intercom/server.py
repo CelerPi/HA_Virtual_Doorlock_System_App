@@ -5,6 +5,7 @@ import os
 import time
 from pathlib import Path
 
+from .api import ApiServer
 from .core import IntercomCore
 from .config import load_addon_options
 from .store import ConfigStore
@@ -16,13 +17,16 @@ def main() -> None:
     defaults = load_addon_options(options_path)
     config = ConfigStore(store_path).load(defaults)
     core = IntercomCore(config)
+    api_server = ApiServer(core, config)
     core.start()
+    api_server.start()
     print(
         json.dumps(
             {
                 "event": "yunhai_intercom_started",
                 "config": config.as_dict(),
                 "store_path": str(store_path),
+                "api_url": f"http://{config.api_host}:{config.api_port}",
             },
             ensure_ascii=False,
         ),
@@ -33,6 +37,7 @@ def main() -> None:
         while True:
             time.sleep(60)
     finally:
+        api_server.stop()
         core.stop()
 
 

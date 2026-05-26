@@ -17,9 +17,15 @@ options:
   building_id: "building_1_a"
   center_ip: "192.168.16.2"
   property_center_ip: "192.168.23.255"
+  api_host: "0.0.0.0"
+  api_port: 8099
+  api_token: ""
 schema:
   local_ip: str
   local_id: str
   building_id: list(building_1_a|building_1_b|building_1_c|building_1_d|building_1_e|building_2_a|building_2_b|building_2_c)
   center_ip: str
   property_center_ip: str
+  api_host: str
+  api_port: int(1,65535)
+  api_token: password

@@ -20,6 +20,14 @@ UDP 10008
 
 Add-on 使用 `host_network: true`，因此它会直接绑定 HA 主机网络上的 `local_ip:10000` 和 `local_ip:10008`。
 
+Add-on HTTP API 默认监听：
+
+```text
+TCP 8099
+```
+
+如果 `api_host` 设置为 `0.0.0.0`，同一网络中的设备可以访问该端口。解锁/接听接口需要 `api_token`。
+
 ## 推荐连接方式
 
 将 HA Yellow 或运行 HA OS/Supervised 的主机接入门禁所在网络，并给它配置一个门禁网段 IP。

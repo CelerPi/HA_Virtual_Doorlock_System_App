@@ -38,6 +38,8 @@
 - [Get Start](docs/get-start.md)
 - [配置说明](docs/configuration.md)
 - [网络连接方式](docs/network.md)
+- [Add-on API](docs/api.md)
+- [HA 首次测试清单](docs/ha-first-test.md)
 - [排障](docs/troubleshooting.md)
 
 ## 功能范围

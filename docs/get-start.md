@@ -7,6 +7,8 @@
 - [安装 Add-on](#安装-add-on)
 - [基础配置](configuration.md)
 - [网络连接方式](network.md)
+- [Add-on API](api.md)
+- [HA 首次测试清单](ha-first-test.md)
 - [排障](troubleshooting.md)
 
 ## 当前状态
@@ -16,6 +18,7 @@
 - 读取 HA Add-on options。
 - 维护持久化配置文件 `/data/yunhai_config.json`。
 - 绑定 UDP `10000` 和 `10008`。
+- 提供 HTTP 健康检查和状态接口。
 - 监听已配置门口机呼入。
 - 识别呼入触发包 `cd000100`、`98000100`、`b7000100`。
 - 呼叫会话中发送接听、解锁和音频上行包。
@@ -39,6 +42,7 @@ Lovelace 卡片和 HA Custom Integration 还未完成，因此当前阶段主要
 7. 打开 **Start on boot** 和 **Watchdog**。
 8. 点击 **Start**。
 9. 在 **Log** 页确认看到 `yunhai_intercom_started`。
+10. 按 [HA 首次测试清单](ha-first-test.md) 做第一次实机验证。
 
 ## 最小可用配置
 
@@ -50,9 +54,13 @@ local_id: "00010116010"
 building_id: "building_1_a"
 center_ip: "192.168.16.2"
 property_center_ip: "192.168.23.255"
+api_host: "0.0.0.0"
+api_port: 8099
+api_token: ""
 ```
 
 如果 HA 主机实际 IP 不是 `192.168.16.64`，必须把 `local_ip` 改成 HA 主机在门禁网段上的真实地址。
+如果要测试解锁/接听动作接口，请把 `api_token` 改成一个自定义长 token。
 
 ## 第一次启动后会发生什么
 

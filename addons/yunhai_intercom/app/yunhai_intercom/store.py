@@ -12,6 +12,9 @@ OPTION_CONTROLLED_KEYS = (
     "building_id",
     "center_ip",
     "property_center_ip",
+    "api_host",
+    "api_port",
+    "api_token",
 )
 
 
@@ -26,7 +29,7 @@ class ConfigStore:
             raw = {}
 
         merged = dict(raw) if isinstance(raw, dict) else {}
-        default_data = defaults.as_dict()
+        default_data = defaults.as_dict(include_secret=True)
         if merged.get("building_id") != default_data["building_id"]:
             merged.pop("devices", None)
         for key in OPTION_CONTROLLED_KEYS:

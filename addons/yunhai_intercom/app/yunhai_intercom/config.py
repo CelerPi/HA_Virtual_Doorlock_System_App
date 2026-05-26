@@ -11,6 +11,9 @@ DEFAULT_LOCAL_ID = "00010116010"
 DEFAULT_BUILDING_ID = "building_1_a"
 DEFAULT_CENTER_IP = "192.168.16.2"
 DEFAULT_PROPERTY_CENTER_IP = "192.168.23.255"
+DEFAULT_API_HOST = "0.0.0.0"
+DEFAULT_API_PORT = 8099
+DEFAULT_API_TOKEN = ""
 
 STATION_LAYOUT = [
     {"name": "1F-1", "door_no": "01", "floor_label": "1层", "position_detail": "车库"},
@@ -96,23 +99,31 @@ class IntercomConfig:
     building_name: str
     center_ip: str
     property_center_ip: str
+    api_host: str
+    api_port: int
+    api_token: str
     devices: tuple[DoorStation, ...]
 
     @property
     def active_devices(self) -> list[DoorStation]:
         return [device for device in self.devices if device.target_ip]
 
-    def as_dict(self) -> dict[str, Any]:
-        return {
+    def as_dict(self, include_secret: bool = False) -> dict[str, Any]:
+        data = {
             "local_ip": self.local_ip,
             "local_id": self.local_id,
             "building_id": self.building_id,
             "building_name": self.building_name,
             "center_ip": self.center_ip,
             "property_center_ip": self.property_center_ip,
+            "api_host": self.api_host,
+            "api_port": self.api_port,
             "devices": [device.as_dict() for device in self.devices],
             "active_device_count": len(self.active_devices),
         }
+        if include_secret:
+            data["api_token"] = self.api_token
+        return data
 
 
 def load_addon_options(options_path: str | Path = "/data/options.json") -> IntercomConfig:
@@ -140,6 +151,9 @@ def normalize_options(raw_options: Any) -> IntercomConfig:
         building_name=BUILDING_NAME_BY_ID[building_id],
         center_ip=str(options.get("center_ip") or DEFAULT_CENTER_IP),
         property_center_ip=str(options.get("property_center_ip") or DEFAULT_PROPERTY_CENTER_IP),
+        api_host=str(options.get("api_host") or DEFAULT_API_HOST),
+        api_port=_coerce_api_port(options.get("api_port")),
+        api_token=str(options.get("api_token") or DEFAULT_API_TOKEN),
         devices=devices,
     )
 
@@ -179,3 +193,13 @@ def _saved_devices_by_door(saved_devices: Any) -> dict[str, dict[str, Any]]:
         if door_no:
             devices[door_no] = device
     return devices
+
+
+def _coerce_api_port(value: Any) -> int:
+    try:
+        port = int(value)
+    except (TypeError, ValueError):
+        return DEFAULT_API_PORT
+    if port < 1 or port > 65535:
+        return DEFAULT_API_PORT
+    return port

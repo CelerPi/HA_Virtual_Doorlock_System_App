@@ -9,6 +9,9 @@
 | `building_id` | `building_1_a` | 楼栋预设。当前只有 1 栋 A 座门口机 IP 已知。 |
 | `center_ip` | `192.168.16.2` | 小区中心地址。 |
 | `property_center_ip` | `192.168.23.255` | 物业中心机地址。 |
+| `api_host` | `0.0.0.0` | Add-on HTTP API 监听地址。 |
+| `api_port` | `8099` | Add-on HTTP API 监听端口。 |
+| `api_token` | 空 | 动作接口 Bearer token。为空时解锁/接听接口不可用。 |
 
 ## 楼栋 ID
 
@@ -52,5 +55,5 @@ Add-on 会写入：
 
 当前同步规则：
 
-- `local_ip`、`local_id`、`building_id`、`center_ip`、`property_center_ip` 以 Add-on options 为准。
+- `local_ip`、`local_id`、`building_id`、`center_ip`、`property_center_ip`、API 配置以 Add-on options 为准。
 - `devices` 中已经手动覆盖过的门口机 IP 会保留。

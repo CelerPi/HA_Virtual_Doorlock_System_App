@@ -36,6 +36,24 @@
 4. 当前楼栋门口机 IP 是否为空。
 5. HA 主机是否接在门禁网络或正确 VLAN 上。
 
+## API 无法访问
+
+先检查 Add-on 日志是否已经出现 `yunhai_intercom_started`。
+
+再检查：
+
+1. `api_host` 是否为 `0.0.0.0` 或 HA 主机可访问的地址。
+2. `api_port` 是否与其他服务冲突。
+3. 防火墙或 VLAN 是否阻止 TCP `8099`。
+
+健康检查命令：
+
+```bash
+curl http://<HA主机IP>:8099/health
+```
+
+如果动作接口返回 `403 Forbidden`，说明没有设置 `api_token`，或 `Authorization: Bearer <api_token>` 不匹配。
+
 ## 能看到呼叫但不能解锁
 
 当前已知结论是：单独发送解锁包通常无效，必须在室外机呼叫本室内机的会话窗口内发送 `b7000600`。
