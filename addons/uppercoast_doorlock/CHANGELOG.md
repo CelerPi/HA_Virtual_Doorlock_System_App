@@ -1,5 +1,10 @@
 # 更新日志
 
+## 0.1.2 - 2026-05-27
+
+- 修复 HA 集成 `update_interval` 参数类型错误：`float` 改为 `timedelta`。
+- 添加中文/英文国际化翻译文件（zh.json / en.json），ConfigFlow UI 现已支持中文显示。
+
 ## 0.1.1 - 2026-05-27
 
 - 新增 `GET /api/frame` 接口，返回当前 JPEG 视频帧，供 HA 集成 camera 实体调用。
