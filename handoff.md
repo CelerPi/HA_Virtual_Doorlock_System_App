@@ -82,7 +82,7 @@ HA 集成云海湾门禁系统/
 | 第一阶段 | 整理原型，拆清职责 | ✅ 完成 |
 | 第二阶段 | 创建 HA Addon 骨架 | ✅ 完成 |
 | 第三阶段 | 创建 HA 集成（实体、服务、事件） | ✅ 完成 |
-| 第四阶段 | 仪表盘卡片（Lovelace Custom Card） | **进行中** |
+| 第四阶段 | 仪表盘卡片（Lovelace Custom Card） | ✅ 完成 |
 | 第五阶段 | 音频通话、物业中心呼叫、更多楼栋 | 待开始 |
 
 ---
@@ -141,28 +141,24 @@ HA 集成 (custom_components/uppercoast_doorlock)
 
 ---
 
-## 第四阶段：仪表盘卡片（进行中）
+## 第四阶段：仪表盘卡片 ✅
 
 **目标**：创建 Lovelace Custom Card，复刻虚拟室内机界面和弹窗交互。
 
-### 计划功能
+### 已完成
 
-1. **门口机卡片**：显示各个门口机状态，点击可启动主动监控
-2. **呼叫弹窗**：呼入时自动弹出，显示视频画面 + 解锁/接听/挂断按钮
-3. **呼入自动弹出**：通过监听 `uppercoast_doorlock_call_started` 事件自动触发
-
-### 技术方案
-
-- 使用 HA Custom Card（JavaScript）开发
-- 通过 HA API 获取实时视频帧（/api/frame）
-- 调用 HA 服务 `uppercoast_doorlock.unlock/answer/hangup`
+1. **dashboard/doorlock-card.js** — 完整玻璃拟态 UI 的 LitElement 卡片
+2. **dashboard/doorlock-card.json** — HACS 资源声明
+3. **门口机卡片**：4列响应式门机网格，楼层色彩条，状态指示灯
+4. **呼叫弹窗**：动画呼叫图标、视频区域、三操作按钮（解锁/接听/挂断）
+5. **事件监听**：通过 hass.connection.socket 监听 call_started/call_ended 事件
+6. **楼栋配置**：支持 building_id 选择不同楼栋
 
 ### 待做事项
 
-- [ ] 创建 custom_cards 目录结构
-- [ ] 实现门口机列表卡片
-- [ ] 实现呼叫弹窗（含视频 + 按钮）
-- [ ] 实现呼入自动弹出逻辑
+- [ ] 视频帧实际获取（camera entity 集成）
+- [ ] 点击门口机启动主动监控
+- [ ] HACS 插件化发布
 - [ ] 与 HA Dashboard 集成配置示例
 
 ---
