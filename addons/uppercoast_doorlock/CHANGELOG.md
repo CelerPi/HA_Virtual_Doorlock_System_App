@@ -1,5 +1,10 @@
 # 更新日志
 
+## 0.1.3 - 2026-05-27
+
+- 实体拆分独立平台文件：binary_sensor.py、camera.py、button.py
+- 实体图标确认：binary_sensor (doorbell-video)、camera (cctv)、button解锁 (door-open)、button接听 (phone)、button挂断 (phone-hangup)
+
 ## 0.1.2 - 2026-05-27
 
 - 修复 HA 集成 `update_interval` 参数类型错误：`float` 改为 `timedelta`。
