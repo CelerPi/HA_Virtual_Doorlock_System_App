@@ -153,11 +153,12 @@ HA 集成 (custom_components/uppercoast_doorlock)
 4. **呼叫弹窗**：动画呼叫图标、视频区域、三操作按钮（解锁/接听/挂断）
 5. **事件监听**：通过 hass.connection.socket 监听 call_started/call_ended 事件
 6. **楼栋配置**：支持 building_id 选择不同楼栋
+7. **点击门口机监控**：点击门口机卡片 → 弹出监控窗口，调用 monitor_start 服务
+8. **监控服务**：新增 monitor_start / monitor_stop 服务，支持主动监控指定门口机
 
 ### 待做事项
 
-- [ ] 视频帧实际获取（camera entity 集成）
-- [ ] 点击门口机启动主动监控
+- [ ] 监控弹窗内视频帧渲染（camera entity 或直接 /api/frame 轮询）
 - [ ] HACS 插件化发布
 - [ ] 与 HA Dashboard 集成配置示例
 
