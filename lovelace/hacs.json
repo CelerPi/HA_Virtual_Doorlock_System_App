@@ -1,7 +1,6 @@
 {
   "name": "云海湾门禁卡片",
-  "description": "云海湾虚拟门禁系统的 Lovelace 卡片，显示门口机状态、呼入弹窗和主动监控",
   "filename": "doorlock-card.js",
   "render_readme": true,
-  "content_in_root": false
+  "content_in_root": true
 }
