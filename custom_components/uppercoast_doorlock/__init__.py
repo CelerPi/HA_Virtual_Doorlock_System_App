@@ -53,7 +53,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     }
 
     setup_services(hass)
-    await hass.config_entries.async_forward_entry_setups(entry, ("binary_sensor", "camera"))
+    await hass.config_entries.async_forward_entry_setups(entry, ("binary_sensor", "camera", "button"))
 
     return True
 
