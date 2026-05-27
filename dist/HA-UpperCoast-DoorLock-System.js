@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit-element@3.3.3/lit-element.js?module';
+import { LitElement, html, css } from 'lit';
 
 const DOOR_INFO = {
   building_1_a: [
