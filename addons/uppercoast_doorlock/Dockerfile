@@ -1,8 +1,11 @@
-# 如果 Docker Hub 访问失败，可改用以下国内镜像之一（去掉前面的 #）：
-# FROM docker.mirrors.sjtug.sjtu.edu.cn/library/python:3.12-alpine
-# FROM docker.mirrors.ustc.edu.cn/library/python:3.12-alpine
-# FROM registry.cn-hangzhou.aliyuncs.com/library/python:3.12-alpine
-FROM python:3.12-alpine
+# 国内用户如果 Docker Hub 访问失败，可改用以下镜像之一：
+# 默认使用阿里云镜像的 latest 版本（当前为 Python 3.13+）
+FROM registry.cn-hangzhou.aliyuncs.com/library/python:alpine
+# 备选镜像源：
+# FROM docker.mirrors.sjtug.sjtu.edu.cn/library/python:alpine
+# FROM docker.mirrors.ustc.edu.cn/library/python:alpine
+# 官方源（国内可能无法访问）：
+# FROM python:alpine
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH
