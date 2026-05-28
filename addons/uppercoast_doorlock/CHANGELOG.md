@@ -1,10 +1,14 @@
 # 更新日志
 
-## 0.1.5 - 2026-05-29
+## 0.1.6 - 2026-05-29
 
 - **基础镜像升级至最新 Python**
   - Dockerfile 基础镜像从 `python:3.12-alpine` 升级为 `python:alpine`（自动追踪最新 Python 版本，当前为 3.13+）
   - 国内镜像源保留在注释中，Docker Hub 无法访问时可快速切换
+- **`building_id` 配置项使用枚举 schema 实现真正的下拉选择**
+  - `config.yaml` 中 `building_id` 的 schema 改为枚举格式：`1栋A座|1栋B座|...`
+  - HA Addon 配置页会渲染为下拉选择框，用户直接选择即可
+  - 保存后 `building_id` 为字符串类型，`config.py` 同时兼容旧版列表格式
 
 ## 0.1.4 - 2026-05-29
 
