@@ -7,7 +7,7 @@ configuration:
     description: 虚拟室内机 ID，例如 1栋A座1601 当前使用 00010116010。
   building_id:
     name: 楼栋
-    description: 在下拉列表中选择你所在的楼栋，保存并重启 Addon 后自动加载该楼栋的门口机配置。
+    description: 在下拉列表中选择你所在的楼栋（1A=1栋A座、1B=1栋B座……），保存并重启 Addon 后自动加载该楼栋的门口机配置。
   api_host:
     name: 后端接口监听地址
     description: 后端 HTTP 接口监听地址，通常保持 0.0.0.0。

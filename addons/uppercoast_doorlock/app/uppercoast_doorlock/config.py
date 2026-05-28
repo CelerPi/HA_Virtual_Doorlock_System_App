@@ -32,6 +32,18 @@ BUILDING_NAMES = [
 BUILDING_NAME_BY_ID = dict(BUILDING_NAMES)
 BUILDING_ID_BY_NAME = {name: building_id for building_id, name in BUILDING_NAMES}
 
+# 向后兼容：同时支持英文简写（Addon schema 枚举值）
+BUILDING_ID_BY_NAME.update({
+    "1A": "building_1_a",
+    "1B": "building_1_b",
+    "1C": "building_1_c",
+    "1D": "building_1_d",
+    "1E": "building_1_e",
+    "2A": "building_2_a",
+    "2B": "building_2_b",
+    "2C": "building_2_c",
+})
+
 STATION_LAYOUT_BY_DOOR = {
     "01": {"name": "1F-1", "floor_label": "1层", "position_detail": "未知"},
     "02": {"name": "2F-2", "floor_label": "2层", "position_detail": "未知"},
