@@ -13,7 +13,7 @@ host_network: true
 homeassistant_api: true
 options:
   building_id: "1A"
-  # building_id 为下拉选择，可选值：1A~1E、2A~2C
+  # building_id 为楼栋代码，可选值：1A~1E、2A~2C
   local_id: "00010116010"
   local_ip: "192.168.16.64"
   # 以下三个 IP 为小区固定地址，通常无需修改：
@@ -24,7 +24,7 @@ options:
   api_token: "1234"
   custom_device_overrides: []
 schema:
-  building_id: 1A|1B|1C|1D|1E|2A|2B|2C
+  building_id: str
   local_id: str
   local_ip: str
   # center_ip / property_center_ip 已内置默认值，不在配置页显示
