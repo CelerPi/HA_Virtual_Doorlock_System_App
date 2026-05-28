@@ -1,5 +1,5 @@
 name: "虚拟门禁系统"
-version: "0.1.1"
+version: "0.1.4"
 slug: "uppercoast_doorlock"
 description: "仅支持麦驰可视对讲门禁系统；运行虚拟室内机、呼叫监听、接听和解锁服务。"
 url: "https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon"
@@ -12,36 +12,25 @@ init: false
 host_network: true
 homeassistant_api: true
 options:
-  building_id: "1栋A座"
+  building_id:
+    - "1栋A座"
   local_id: "00010116010"
   local_ip: "192.168.16.64"
-  center_ip: "192.168.16.2"
-  property_center_ip: "192.168.16.3"
+  # 以下三个 IP 为小区固定地址，通常无需修改：
+  # 中心地址 192.168.16.2 | 物业中心机 192.168.16.3
+  # 如需修改，请编辑 app/uppercoast_doorlock/config.py 中的 DEFAULT_* 常量
   api_host: "0.0.0.0"
   api_port: 8099
   api_token: "1234"
-  door_01_ip: ""
-  door_02_ip: ""
-  door_03_ip: ""
-  door_04_ip: ""
-  door_05_ip: ""
-  door_06_ip: ""
-  door_07_ip: ""
-  door_08_ip: ""
+  custom_device_overrides: []
 schema:
-  building_id: str
+  building_id:
+    - str
   local_id: str
   local_ip: str
-  center_ip: str
-  property_center_ip: str
+  # center_ip / property_center_ip 已内置默认值，不在配置页显示
   api_host: str
   api_port: int(1,65535)
   api_token: password
-  door_01_ip: str
-  door_02_ip: str
-  door_03_ip: str
-  door_04_ip: str
-  door_05_ip: str
-  door_06_ip: str
-  door_07_ip: str
-  door_08_ip: str
+  custom_device_overrides:
+    - str

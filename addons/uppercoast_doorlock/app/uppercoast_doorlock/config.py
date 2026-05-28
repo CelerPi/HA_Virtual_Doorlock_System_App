@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+_LOGGER = logging.getLogger(__name__)
 
 
 DEFAULT_LOCAL_IP = "192.168.16.64"
@@ -14,17 +17,6 @@ DEFAULT_PROPERTY_CENTER_IP = "192.168.16.3"
 DEFAULT_API_HOST = "0.0.0.0"
 DEFAULT_API_PORT = 8099
 DEFAULT_API_TOKEN = "1234"
-
-DOOR_IP_OPTION_BY_DOOR = {
-    "01": "door_01_ip",
-    "02": "door_02_ip",
-    "03": "door_03_ip",
-    "04": "door_04_ip",
-    "05": "door_05_ip",
-    "06": "door_06_ip",
-    "07": "door_07_ip",
-    "08": "door_08_ip",
-}
 
 BUILDING_NAMES = [
     ("building_1_a", "1栋A座"),
@@ -222,8 +214,8 @@ def normalize_options(raw_options: Any) -> IntercomConfig:
         local_id=str(options.get("local_id") or DEFAULT_LOCAL_ID),
         building_id=building_id,
         building_name=BUILDING_NAME_BY_ID[building_id],
-        center_ip=str(options.get("center_ip") or DEFAULT_CENTER_IP),
-        property_center_ip=str(options.get("property_center_ip") or DEFAULT_PROPERTY_CENTER_IP),
+        center_ip=DEFAULT_CENTER_IP,
+        property_center_ip=DEFAULT_PROPERTY_CENTER_IP,
         api_host=str(options.get("api_host") or DEFAULT_API_HOST),
         api_port=_coerce_api_port(options.get("api_port")),
         api_token=str(options.get("api_token") or DEFAULT_API_TOKEN),
@@ -239,7 +231,7 @@ def _build_devices(
     known_ips = BUILDING_IPS_BY_ID.get(building_id, {})
     position_overrides = BUILDING_POSITION_OVERRIDES.get(building_id, {})
     saved_by_door = _saved_devices_by_door(saved_devices)
-    option_ip_overrides = _door_ip_overrides(raw_options)
+    option_ip_overrides = _door_ip_overrides(building_id, raw_options)
     devices = []
 
     for door_no, default_target_ip in known_ips.items():
@@ -263,15 +255,31 @@ def _build_devices(
     return devices
 
 
-def _door_ip_overrides(raw_options: dict[str, Any] | None) -> dict[str, str]:
+def _door_ip_overrides(building_id: str, raw_options: dict[str, Any] | None) -> dict[str, str]:
     if not raw_options:
         return {}
 
-    overrides = {}
-    for door_no, option_key in DOOR_IP_OPTION_BY_DOOR.items():
-        value = str(raw_options.get(option_key) or "").strip()
-        if value:
-            overrides[door_no] = value
+    valid_doors = set(BUILDING_IPS_BY_ID.get(building_id, {}).keys())
+    overrides: dict[str, str] = {}
+    raw_overrides = raw_options.get("custom_device_overrides")
+
+    if not isinstance(raw_overrides, list):
+        return overrides
+
+    for item in raw_overrides:
+        item_str = str(item).strip()
+        if not item_str:
+            continue
+        parts = item_str.split(":", 1)
+        if len(parts) != 2:
+            _LOGGER.warning("自定义号机覆盖格式错误，应为 号机编号:IP地址，例如 01:192.168.16.224。跳过：%s", item_str)
+            continue
+        door_no, ip = parts[0].strip(), parts[1].strip()
+        if door_no not in valid_doors:
+            _LOGGER.warning("号机 %s 不属于当前楼栋 %s（合法号机：%s），跳过", door_no, building_id, ", ".join(sorted(valid_doors)))
+            continue
+        overrides[door_no] = ip
+
     return overrides
 
 
