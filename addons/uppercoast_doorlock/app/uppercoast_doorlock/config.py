@@ -206,7 +206,11 @@ def load_addon_options(options_path: str | Path = "/data/options.json") -> Inter
 def normalize_options(raw_options: Any) -> IntercomConfig:
     options = raw_options if isinstance(raw_options, dict) else {}
 
-    building_value = str(options.get("building_id") or DEFAULT_BUILDING_ID).strip()
+    raw_building = options.get("building_id") or DEFAULT_BUILDING_ID
+    if isinstance(raw_building, list):
+        building_value = str(raw_building[0]).strip() if raw_building else DEFAULT_BUILDING_ID
+    else:
+        building_value = str(raw_building).strip()
     building_id = BUILDING_ID_BY_NAME.get(building_value, building_value)
     if building_id not in BUILDING_NAME_BY_ID:
         building_id = DEFAULT_BUILDING_ID

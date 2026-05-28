@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.1.1 - 2026-05-29
+
+- 修复 `building_id` 配置不生效导致号机数量不随楼栋变化的问题
+  - `config.yaml` 中 `building_id` 的 schema 从 `list` 改为 `str`，避免 HA 将其保存为数组
+  - `config.py` 的 `normalize_options` 增加对列表类型的防御处理，取第一项
+
 ## 0.1.0 - 2026-05-27
 
 - 初始发布：Home Assistant Addon 版本
