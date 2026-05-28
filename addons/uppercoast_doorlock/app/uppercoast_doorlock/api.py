@@ -11,7 +11,7 @@ from .config import IntercomConfig
 
 def make_api_handler(core: Any, config: IntercomConfig) -> type[BaseHTTPRequestHandler]:
     class UpperCoastDoorlockApiHandler(BaseHTTPRequestHandler):
-        server_version = "UpperCoastDoorlockAPI/0.1"
+        server_version = "UpperCoastDoorlockAPI/0.1.0"
 
         def do_GET(self) -> None:
             if self.path == "/health":

@@ -16,3 +16,14 @@
 | `/api/unlock` | POST | 解锁门口机 |
 | `/api/answer` | POST | 接听呼叫 |
 | `/api/hangup` | POST | 挂断通话 |
+| `/api/audio` | GET | 获取接收到的音频 PCM 数据（参数：`?since=audio_id`） |
+| `/api/audio` | POST | 发送音频 PCM 数据到门口机 |
+| `/api/monitor/start` | POST | 开始主动监控指定门口机 |
+| `/api/monitor/stop` | POST | 停止主动监控 |
+
+## 音频格式
+
+音频采样参数为 **8kHz / 单声道 / 16-bit little-endian PCM**。
+
+- `GET /api/audio` 返回 `{"ok": true, "audio_id": N, "chunks": [{"id": N, "pcm": "base64"}]}`，每个 chunk 是一段 PCM 数据。
+- `POST /api/audio` 请求体为 `{"target_ip": "...", "pcm": "base64..."}`，PCM 数据需为偶数字节长度。

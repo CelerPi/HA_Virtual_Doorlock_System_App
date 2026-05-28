@@ -1,5 +1,5 @@
 name: "虚拟门禁系统"
-version: "0.1.8"
+version: "0.1.0"
 slug: "uppercoast_doorlock"
 description: "仅支持麦驰可视对讲门禁系统；运行虚拟室内机、呼叫监听、接听和解锁服务。"
 url: "https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon"
@@ -19,7 +19,7 @@ options:
   property_center_ip: "192.168.16.3"
   api_host: "0.0.0.0"
   api_port: 8099
-  api_token: ""
+  api_token: "1234"
   door_01_ip: ""
   door_02_ip: ""
   door_03_ip: ""
