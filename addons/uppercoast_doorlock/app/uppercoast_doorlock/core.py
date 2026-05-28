@@ -102,6 +102,10 @@ class FrameHub:
         with self._condition:
             return self._frame
 
+    def get_audio_chunks(self, since_id: int = 0) -> list[tuple[int, bytes]]:
+        with self._condition:
+            return [(aid, pcm) for aid, pcm in self._audio_chunks if aid > since_id]
+
 
 class IntercomCore:
     def __init__(self, config: IntercomConfig, frame_hub: FrameHub | None = None) -> None:

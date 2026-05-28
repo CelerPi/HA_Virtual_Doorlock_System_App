@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -35,6 +36,29 @@ def make_api_handler(core: Any, config: IntercomConfig) -> type[BaseHTTPRequestH
                 self.send_header("Content-Length", str(len(frame)))
                 self.end_headers()
                 self.wfile.write(frame)
+                return
+            if self.path.startswith("/api/audio"):
+                if not self._authorized():
+                    self._write_json(403, {"ok": False, "error": "forbidden"})
+                    return
+                since = 0
+                if "?" in self.path:
+                    query = self.path.split("?", 1)[1]
+                    for param in query.split("&"):
+                        if param.startswith("since="):
+                            try:
+                                since = int(param.split("=", 1)[1])
+                            except (ValueError, IndexError):
+                                pass
+                chunks = core.frame_hub.get_audio_chunks(since)
+                self._write_json(200, {
+                    "ok": True,
+                    "audio_id": core.frame_hub.snapshot().get("audio_id", 0),
+                    "chunks": [
+                        {"id": aid, "pcm": base64.b64encode(pcm).decode("ascii")}
+                        for aid, pcm in chunks
+                    ],
+                })
                 return
             if self.path.startswith("/api/monitor/"):
                 parts = self.path.split("/")
@@ -82,6 +106,35 @@ def make_api_handler(core: Any, config: IntercomConfig) -> type[BaseHTTPRequestH
                     self._write_json(409, {"ok": False, "error": "request_rejected", "action": action})
                     return
                 self._write_json(200, {"ok": True, "action": action, "target_ip": target_ip})
+                return
+
+            if self.path == "/api/audio":
+                if not self._authorized():
+                    self._write_json(403, {"ok": False, "error": "forbidden"})
+                    return
+
+                body = self._read_json()
+                target_ip = body.get("target_ip", "").strip()
+                pcm_b64 = body.get("pcm", "")
+                if not target_ip or not pcm_b64:
+                    self._write_json(400, {"ok": False, "error": "missing_target_ip_or_pcm"})
+                    return
+
+                try:
+                    pcm = base64.b64decode(pcm_b64)
+                except Exception:
+                    self._write_json(400, {"ok": False, "error": "invalid_pcm_base64"})
+                    return
+
+                if len(pcm) % 2 != 0:
+                    self._write_json(400, {"ok": False, "error": "pcm_length_must_be_even"})
+                    return
+
+                accepted = core.request_outgoing_audio(target_ip, pcm)
+                if not accepted:
+                    self._write_json(409, {"ok": False, "error": "audio_request_rejected"})
+                    return
+                self._write_json(200, {"ok": True, "target_ip": target_ip, "samples": len(pcm) // 2})
                 return
 
             if self.path in ("/api/monitor/start", "/api/monitor/stop"):
