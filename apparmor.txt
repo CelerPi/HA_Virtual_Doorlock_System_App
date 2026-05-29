@@ -1,18 +1,16 @@
 # AppArmor profile for Virtual Doorlock System (VDS) App
 # Allow network access for UDP 10000/10008 and TCP 8099
 
-#include <tunables/global>
-
-profile vds flags=(attach_disconnected,mediate_deleted) {
+profile vds {
   #include <abstractions/base>
 
-  network inet stream,
-  network inet dgram,
+  network inet  stream,
+  network inet  dgram,
   network inet6 stream,
   network inet6 dgram,
 
-  /vds/** r,
-  /run.sh rx,
-  /data/** rw,
-  /tmp/** rw,
+  /app/vds/**  r,
+  /run.sh      rx,
+  /data/**     rw,
+  /tmp/**      rw,
 }
