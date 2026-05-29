@@ -125,7 +125,7 @@ class IntercomCore:
         if self._thread is not None and self._thread.is_alive():
             return
         self._stop_event.clear()
-        self._thread = threading.Thread(target=self.run, name="UpperCoastDoorlockCore", daemon=True)
+        self._thread = threading.Thread(target=self.run, name="VDS-Core", daemon=True)
         self._thread.start()
 
     def stop(self) -> None:

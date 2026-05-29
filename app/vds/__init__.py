@@ -1,4 +1,4 @@
-"""UpperCoast doorlock add-on backend."""
+"""Virtual Doorlock System (VDS) — Home Assistant App backend."""
 
 from .config import DoorStation, IntercomConfig, load_addon_options
 from .core import FrameHub, IntercomCore

@@ -10,7 +10,7 @@ configuration:
     description: |
       请在上方文本框中输入楼栋代码（注意区分大小写）。
       可选值：1A、1B、1C、1D、1E、2A、2B、2C。
-      保存并重启 Addon 后自动加载该楼栋的门口机配置。
+      保存并重启 App 后自动加载该楼栋的门口机配置。
   api_host:
     name: 后端接口监听地址
     description: 后端 HTTP 接口监听地址，通常保持 0.0.0.0。
@@ -22,4 +22,4 @@ configuration:
     description: 接听、解锁等动作接口使用的 Bearer token。为空时动作接口不可用。
   custom_device_overrides:
     name: 自定义号机覆盖
-    description: "格式：号机编号:IP地址，例如 01:192.168.16.224。只添加需要覆盖的号机，留空使用楼栋预设。Addon 启动时会自动校验号机是否属于当前楼栋，不合法项会被忽略并记录日志。"
+    description: "格式：号机编号:IP地址，例如 01:192.168.16.224。只添加需要覆盖的号机，留空使用楼栋预设。App 启动时会自动校验号机是否属于当前楼栋，不合法项会被忽略并记录日志。"

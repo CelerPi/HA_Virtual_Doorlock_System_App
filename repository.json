@@ -1,6 +1,0 @@
-{
-  "name": "云海湾门禁系统",
-  "description": "麦驰可视对讲门禁系统的 Home Assistant Addon",
-  "url": "https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon",
-  "topics": ["doorlock", "intercom", "maite", "homeassistant"]
-}

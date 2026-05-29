@@ -10,8 +10,8 @@ from .config import IntercomConfig
 
 
 def make_api_handler(core: Any, config: IntercomConfig) -> type[BaseHTTPRequestHandler]:
-    class UpperCoastDoorlockApiHandler(BaseHTTPRequestHandler):
-        server_version = "UpperCoastDoorlockAPI/0.1.0"
+    class VDSApiHandler(BaseHTTPRequestHandler):
+        server_version = "VDS-API/0.1.0"
 
         def do_GET(self) -> None:
             if self.path == "/health":
@@ -189,7 +189,7 @@ def make_api_handler(core: Any, config: IntercomConfig) -> type[BaseHTTPRequestH
             self.end_headers()
             self.wfile.write(payload)
 
-    return UpperCoastDoorlockApiHandler
+    return VDSApiHandler
 
 
 class ApiServer:
@@ -204,7 +204,7 @@ class ApiServer:
             return
         handler = make_api_handler(self.core, self.config)
         self._server = ThreadingHTTPServer((self.config.api_host, self.config.api_port), handler)
-        self._thread = threading.Thread(target=self._server.serve_forever, name="UpperCoastDoorlockAPI", daemon=True)
+        self._thread = threading.Thread(target=self._server.serve_forever, name="VDS-API", daemon=True)
         self._thread.start()
 
     def stop(self) -> None:

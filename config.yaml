@@ -1,7 +1,7 @@
-name: "虚拟门禁系统"
+name: "Virtual Doorlock System (VDS)"
 version: "0.1.7"
-slug: "uppercoast_doorlock"
-description: "仅支持麦驰可视对讲门禁系统；运行虚拟室内机、呼叫监听、接听和解锁服务。"
+slug: "vds"
+description: "麦驰可视对讲门禁系统 Home Assistant App。运行虚拟室内机、呼叫监听、接听和解锁服务。"
 url: "https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon"
 arch:
   - aarch64
@@ -18,7 +18,7 @@ options:
   local_ip: "192.168.16.64"
   # 以下三个 IP 为小区固定地址，通常无需修改：
   # 中心地址 192.168.16.2 | 物业中心机 192.168.16.3
-  # 如需修改，请编辑 app/uppercoast_doorlock/config.py 中的 DEFAULT_* 常量
+  # 如需修改，请编辑 app/vds/config.py 中的 DEFAULT_* 常量后重新安装 App
   api_host: "0.0.0.0"
   api_port: 8099
   api_token: "1234"

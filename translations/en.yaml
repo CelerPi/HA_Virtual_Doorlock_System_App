@@ -1,0 +1,25 @@
+configuration:
+  local_ip:
+    name: Local IP
+    description: The IP address of the HA host on the intercom network. Must be a real IP configured on the HA host's network interface.
+  local_id:
+    name: Indoor Unit ID
+    description: Virtual indoor unit ID, e.g. 00010116010 for Building 1A Unit 1601.
+  building_id:
+    name: Building
+    description: |
+      Enter your building code in the text box above (case-sensitive).
+      Options: 1A, 1B, 1C, 1D, 1E, 2A, 2B, 2C.
+      Save and restart the App to load the door station configuration for that building.
+  api_host:
+    name: API Listen Address
+    description: Backend HTTP API listen address, usually 0.0.0.0.
+  api_port:
+    name: API Listen Port
+    description: Backend HTTP API listen port, default 8099.
+  api_token:
+    name: API Access Token
+    description: Bearer token used for answer/unlock actions. Action endpoints are disabled when empty.
+  custom_device_overrides:
+    name: Custom Device Overrides
+    description: "Format: door_no:IP, e.g. 01:192.168.16.224. Only add devices you need to override; leave empty to use building presets. Invalid entries are skipped and logged at startup."

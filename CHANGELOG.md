@@ -1,5 +1,12 @@
 # 更新日志
 
+## 0.1.7 - 2026-05-29
+
+- **添加运行时 debug 日志，便于排查呼叫接收问题**
+  - `core.py` 每收到一个 UDP 包都会打印 `src IP:port`、`length`、`command`
+  - `call_state.py` 在丢弃未知源 IP 的包时打印已知门口机列表
+  - 在 Addon 日志中可直接观察到是否收到了门口机的呼叫数据包
+
 ## 0.1.6 - 2026-05-29
 
 - **基础镜像升级至最新 Python**
@@ -12,10 +19,6 @@
 - **`custom_device_overrides` 兼容字符串类型输入**
   - `config.py` 的 `normalize_options()` 增加对字符串类型的兼容处理
   - 当 `custom_device_overrides` 被 HA 保存为字符串而非列表时，自动包装为单元素列表
-- **添加运行时 debug 日志，便于排查呼叫接收问题**
-  - `core.py` 每收到一个 UDP 包都会打印 `src IP:port`、`length`、`command`
-  - `call_state.py` 在丢弃未知源 IP 的包时打印已知门口机列表
-  - 在 Addon 日志中可直接观察到是否收到了门口机的呼叫数据包
 
 ## 0.1.4 - 2026-05-29
 
@@ -32,7 +35,7 @@
 - **隐藏固定网络参数，简化配置页**
   - `center_ip`（中心地址 `192.168.16.2`）和 `property_center_ip`（物业中心机 `192.168.16.3`）已从 `config.yaml` 配置页中移除
   - 改为在 `config.py` 中通过 `DEFAULT_CENTER_IP` 和 `DEFAULT_PROPERTY_CENTER_IP` 硬编码
-  - 如果你的小区网络环境不同，请手动编辑 `app/uppercoast_doorlock/config.py` 后重新安装 Addon
+  - 如果你的小区网络环境不同，请手动编辑 `app/vds/config.py` 后重新安装 App
 
 ## 0.1.2 - 2026-05-29
 
@@ -50,8 +53,8 @@
 ## 0.1.0 - 2026-05-27
 
 - 初始发布：Home Assistant Addon 版本
-- 将应用目录、应用标识和 Python 包名统一为 `uppercoast_doorlock`
-- 加载项名称：虚拟门禁系统
+- 将应用目录、应用标识和 Python 包名统一为 `vds`
+- 加载项名称：Virtual Doorlock System (VDS)
 - 当前仅支持麦驰可视对讲门禁系统
 - 楼栋下拉选项为中文楼栋名，保存并重启后加载对应门口机配置
 - 启动日志输出为中文摘要，不再输出完整 JSON 配置
