@@ -35,9 +35,11 @@ class CallStateTracker:
         source_ip = address[0]
         device = self._devices_by_ip.get(source_ip)
         if device is None:
+            print(f"[call_state] 丢弃: 源IP {source_ip} 不在已知门口机列表中。已知: {list(self._devices_by_ip.keys())}", flush=True)
             return None
 
         command = parse_penguin_command(payload)
+        print(f"[call_state] 匹配设备: {device.display_name}({device.target_ip}) 命令: {command}", flush=True)
         if command in CALL_TRIGGER_COMMANDS:
             self._current_device = device
             return CallEvent("call_started", command, device)

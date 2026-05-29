@@ -9,6 +9,13 @@
   - `config.yaml` 中 `building_id` 为 `str` 类型，配置页显示为文本输入框
   - 使用英文简写（1A~1E、2A~2C）替代中文（1栋A座等），避免输入错误
   - `config.py` 同时兼容旧版中文配置（如 `1栋A座`）和新的英文简写（如 `1A`）
+- **`custom_device_overrides` 兼容字符串类型输入**
+  - `config.py` 的 `normalize_options()` 增加对字符串类型的兼容处理
+  - 当 `custom_device_overrides` 被 HA 保存为字符串而非列表时，自动包装为单元素列表
+- **添加运行时 debug 日志，便于排查呼叫接收问题**
+  - `core.py` 每收到一个 UDP 包都会打印 `src IP:port`、`length`、`command`
+  - `call_state.py` 在丢弃未知源 IP 的包时打印已知门口机列表
+  - 在 Addon 日志中可直接观察到是否收到了门口机的呼叫数据包
 
 ## 0.1.4 - 2026-05-29
 

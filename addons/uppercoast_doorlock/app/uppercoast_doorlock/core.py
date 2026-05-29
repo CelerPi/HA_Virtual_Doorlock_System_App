@@ -214,6 +214,7 @@ class IntercomCore:
                         except socket.timeout:
                             continue
 
+                        print(f"[core] 收到包: src={address[0]}:{address[1]} len={len(payload)} cmd={payload[8:12].hex() if payload.startswith(b'PENGUIN0') else '-'}", flush=True)
                         state = self.handle_packet(payload, address, state, discovery_sock, session_sock)
         except Exception as exc:
             self.frame_hub.update_status(f"监听已停止：{exc}")
