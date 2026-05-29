@@ -1,4 +1,4 @@
-"""Virtual Doorlock System (VDS) — Home Assistant App backend."""
+"""Virtual Doorlock System — Home Assistant App backend."""
 
 from .config import DoorStation, IntercomConfig, load_addon_options
 from .core import FrameHub, IntercomCore

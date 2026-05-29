@@ -59,6 +59,7 @@ class FrameHub:
             self._frame = None
             self._audio_chunks = []
             self._status = f"检测到{device.display_name}呼叫，正在建立视频会话..."
+            print(f"检测到{device.display_name}呼叫，正在建立视频会话...")
             self._condition.notify_all()
 
     def publish_frame(self, jpeg: bytes) -> None:
@@ -67,6 +68,7 @@ class FrameHub:
             self._frame = jpeg
             if self._device is not None:
                 self._status = f"正在显示{self._device.display_name}呼叫视频"
+                print(f"正在显示{self._device.display_name}呼叫视频")
             self._condition.notify_all()
 
     def publish_audio(self, pcm: bytes) -> None:
@@ -82,6 +84,7 @@ class FrameHub:
             self._frame = None
             self._audio_chunks = []
             self._status = "呼叫会话已结束，继续等待下一次呼叫"
+            print("呼叫会话已结束，继续等待下一次呼叫")
             self._condition.notify_all()
 
     def snapshot(self) -> dict[str, Any]:
@@ -186,6 +189,7 @@ class IntercomCore:
     def run(self) -> None:
         if not self.config.active_devices:
             self.frame_hub.update_status("没有可监听的门禁配置")
+            print("没有可监听的门禁配置")
             return
 
         state: dict[str, Any] = {"active": False}
@@ -199,8 +203,9 @@ class IntercomCore:
                     session_sock.settimeout(0.03)
                     self.frame_hub.update_status(
                         f"持续监听 {self.config.local_ip}:{TARGET_PORT}，等待室外机呼叫"
+                        
                     )
-
+                    print(f"持续监听 {self.config.local_ip}:{TARGET_PORT}，等待室外机呼叫")
                     while not self._stop_event.is_set():
                         self._drain_discovery_replies(discovery_sock)
                         state = self.run_monitor_timers(state, discovery_sock, session_sock)
@@ -218,6 +223,7 @@ class IntercomCore:
                         state = self.handle_packet(payload, address, state, discovery_sock, session_sock)
         except Exception as exc:
             self.frame_hub.update_status(f"监听已停止：{exc}")
+            print(f"监听已停止：{exc}")
 
     def handle_packet(
         self,
@@ -446,8 +452,10 @@ class IntercomCore:
         except OSError as exc:
             if exc.errno == errno.EADDRINUSE:
                 raise RuntimeError(f"{address[0]}:{address[1]} 已被占用，请先关闭旧监听程序。") from exc
+                print(f"{address[0]}:{address[1]} 已被占用，请先关闭旧监听程序。")
             if exc.errno == errno.EADDRNOTAVAIL:
                 raise RuntimeError(f"本机 IP {address[0]} 不在当前网卡上，请检查 HA 网络配置。") from exc
+                print(f"本机 IP {address[0]} 不在当前网卡上，请检查 HA 网络配置。")
             raise
 
     def _drain_discovery_replies(self, discovery_sock: socket.socket) -> None:
