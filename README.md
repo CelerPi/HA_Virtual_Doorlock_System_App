@@ -17,7 +17,7 @@
 
 1. 在 Home Assistant 中，进入 **设置 → 应用 → 应用商店**
 2. 点击右上角菜单 → **仓库**
-3. 添加仓库地址：`https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon`
+3. 添加仓库地址：`https://github.com/CelerPi/HA_Virtual_Doorlock_System_App`
 4. 商店刷新后，找到 **Virtual Doorlock System (VDS)** 并安装
 
 ## 配置

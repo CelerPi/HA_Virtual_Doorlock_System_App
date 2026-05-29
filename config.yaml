@@ -2,7 +2,7 @@ name: "Virtual Doorlock System (VDS)"
 version: "0.1.7"
 slug: "vds"
 description: "麦驰可视对讲门禁系统 Home Assistant App。运行虚拟室内机、呼叫监听、接听和解锁服务。"
-url: "https://github.com/CelerPi/HA-UpperCoast-DoorLock-Addon"
+url: "https://github.com/CelerPi/HA_Virtual_Doorlock_System_App"
 arch:
   - aarch64
   - amd64

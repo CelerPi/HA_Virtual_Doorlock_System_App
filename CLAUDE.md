@@ -209,3 +209,4 @@ python3 -m vds.server
 - App 功能文档：[DOCS.md](DOCS.md)
 - 版本变更日志：[CHANGELOG.md](CHANGELOG.md)
 - HA App 配置文档：https://www.home-assistant.io/docs/apps/
+- 仓库地址：https://github.com/CelerPi/HA_Virtual_Doorlock_System_App
