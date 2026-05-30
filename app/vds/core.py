@@ -42,6 +42,7 @@ class FrameHub:
     def __init__(self) -> None:
         self._condition = threading.Condition()
         self._device: DoorStation | None = None
+        self._session_type: str | None = None
         self._status = "正在启动呼叫监听..."
         self._frame_id = 0
         self._frame: bytes | None = None
@@ -53,13 +54,18 @@ class FrameHub:
             self._status = status
             self._condition.notify_all()
 
-    def begin_call(self, device: DoorStation) -> None:
+    def begin_call(self, device: DoorStation, session_type: str = "call") -> None:
         with self._condition:
             self._device = device
+            self._session_type = session_type
             self._frame = None
             self._audio_chunks = []
-            self._status = f"检测到{device.display_name}呼叫，正在建立视频会话..."
-            print(f"检测到{device.display_name}呼叫，正在建立视频会话...")
+            if session_type == "monitor":
+                self._status = f"正在监控{device.display_name}..."
+                print(f"正在监控{device.display_name}...")
+            else:
+                self._status = f"检测到{device.display_name}呼叫，正在建立视频会话..."
+                print(f"检测到{device.display_name}呼叫，正在建立视频会话...")
             self._condition.notify_all()
 
     def publish_frame(self, jpeg: bytes) -> None:
@@ -81,6 +87,7 @@ class FrameHub:
     def end_call(self) -> None:
         with self._condition:
             self._device = None
+            self._session_type = None
             self._frame = None
             self._audio_chunks = []
             self._status = "呼叫会话已结束，继续等待下一次呼叫"
@@ -92,6 +99,7 @@ class FrameHub:
             return {
                 "status": self._status,
                 "in_call": self._device is not None,
+                "session_type": self._session_type,
                 "device_name": self._device.name if self._device else "",
                 "display_name": self._device.display_name if self._device else "",
                 "target_ip": self._device.target_ip if self._device else "",
@@ -418,7 +426,7 @@ class IntercomCore:
         target_session = (device.target_ip, TARGET_PORT)
         discovery_sock.sendto(build_monitor_discovery_payload(device), target_discovery)
         session_sock.sendto(build_monitor_request_payload(device, self.config.local_ip, self.config.local_id), target_session)
-        self.frame_hub.begin_call(device)
+        self.frame_hub.begin_call(device, session_type="monitor")
 
     def _is_current_call(self, target_ip: str) -> bool:
         snapshot = self.frame_hub.snapshot()

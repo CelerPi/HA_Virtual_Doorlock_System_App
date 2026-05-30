@@ -1,5 +1,5 @@
 name: "Virtual Doorlock System"
-version: "0.1.9"
+version: "0.2.0"
 slug: "virtual_doorlock"
 description: "麦驰可视对讲门禁系统 Home Assistant App。运行虚拟室内机、呼叫监听、接听和解锁服务。"
 url: "https://github.com/CelerPi/HA_Virtual_Doorlock_System_App"
